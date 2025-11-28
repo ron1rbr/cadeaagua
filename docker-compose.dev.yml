@@ -4,45 +4,45 @@ services:
     build:
       context: .
       dockerfile: docker/dev/Dockerfile
-    image: novoendereco-app_r
-    container_name: novoendereco-app_r
+    image: cadeaagua-app
+    container_name: cadeaagua-app
     volumes:
       - .:/var/www
     networks:
-      - novoendereco_r
+      - cadeaagua 
     environment:
       - APP_ENV=local
 
   nginx:
     image: nginx:latest
-    container_name: novoendereco-nginx_r
+    container_name: cadeaagua-nginx
     volumes:
       - .:/var/www
       - ./docker/dev/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "8080:80"
     networks:
-      - novoendereco_r
+      - cadeaagua 
 
   mysql:
     image: mysql:8
-    container_name: novoendereco-mysql_r
+    container_name: cadeaagua-mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: novoendereco
-      MYSQL_USER: novoendereco
-      MYSQL_PASSWORD: novoendereco
+      MYSQL_DATABASE: cadeaagua 
+      MYSQL_USER: cadeaagua 
+      MYSQL_PASSWORD: cadeaagua 
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
-      - novoendereco_r
+      - cadeaagua 
 
   pma:
     image: phpmyadmin/phpmyadmin
-    container_name: novoendereco-pma_r
+    container_name: cadeaagua-pma
     restart: always
     environment:
       PMA_HOST: mysql
@@ -51,11 +51,12 @@ services:
     ports:
       - "8081:80"
     networks:
-      - novoendereco_r
+      - cadeaagua 
 
 
 networks:
-  novoendereco_r:
+  cadeaagua:
+    name: cadeaagua
 
 volumes:
   mysql_data:
