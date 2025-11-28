@@ -1,0 +1,43 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/prod/Dockerfile
+    image: cadeaagua-app
+    container_name: cadeaagua-app
+    networks:
+      - cadeaagua
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: cadeaagua-nginx
+    volumes:
+      - ./docker/prod/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    networks:
+      - cadeaagua
+
+  mysql:
+    image: mysql:8
+    container_name: cadeaagua-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${}
+      MYSQL_DATABASE: ${}
+      MYSQL_USER: ${}
+      MYSQL_PASSWORD: ${}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      cadeaagua
+
+networks:
+  cadeaagua:
+    name: cadeaagua
+
+volumes:
+  mysql_data:
