@@ -24,39 +24,22 @@ services:
     networks:
       - cadeaagua 
 
-  mysql:
-    image: mysql:8
-    container_name: cadeaagua-mysql
+  postgres:
+    image: postgis/postgis:15-3.4
+    container_name: cadeaagua-postgres
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: cadeaagua 
-      MYSQL_USER: cadeaagua 
-      MYSQL_PASSWORD: cadeaagua 
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - mysql_data:/var/lib/mysql
-    ports:
-      - "3307:3306"
+      - postgres_data:/var/lib/postgresql/data
     networks:
-      - cadeaagua 
-
-  pma:
-    image: phpmyadmin/phpmyadmin
-    container_name: cadeaagua-pma
-    restart: always
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "8081:80"
-    networks:
-      - cadeaagua 
-
+      - cadeaagua
 
 networks:
   cadeaagua:
     name: cadeaagua
 
 volumes:
-  mysql_data:
+  postgres_data:

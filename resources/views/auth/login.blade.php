@@ -10,7 +10,7 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" value="E-mail" />
             <x-text-input
                 id="email"
                 class="block mt-1 w-full"
@@ -26,7 +26,7 @@
 
         <!-- Password -->
         <div x-data="{ show: false }" class="relative">
-            <x-input-label for="senha" :value="__('Password')" />
+            <x-input-label for="senha" value="Senha" />
 
             <div class="relative">
                 <x-text-input
@@ -111,7 +111,7 @@
                     class="rounded border-sky-300 text-sky-600 focus:ring-sky-500"
                 >
                 <span class="ml-2 text-sm text-sky-700">
-                    {{ __('Remember me') }}
+                    Lembrar de mim
                 </span>
             </label>
         </div>
@@ -123,12 +123,12 @@
                     href="{{ route('password.request') }}"
                     class="text-sm text-sky-700 hover:text-sky-900 underline font-medium transition"
                 >
-                    {{ __('Forgot your password?') }}
+                    Esqueceu sua senha?
                 </a>
             @endif
 
             <x-primary-button>
-                {{ __('Log in') }}
+                Entrar
             </x-primary-button>
         </div>
 

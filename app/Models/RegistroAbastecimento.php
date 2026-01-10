@@ -10,7 +10,7 @@ class RegistroAbastecimento extends Model
 
     protected $fillable = [
         'user_id',
-        'local_id',
+        'rua_id',
         'tipo_evento',
         'data_evento',
         'nota'
@@ -25,8 +25,8 @@ class RegistroAbastecimento extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function local()
+    public function rua()
     {
-        return $this->belongsTo(Local::class);
+        return $this->belongsTo(Rua::class);
     }
 }
