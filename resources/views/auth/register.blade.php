@@ -2,9 +2,9 @@
     <form method="POST" action="{{ route('register') }}" class="space-y-4">
         @csrf
 
-        <!-- Nome -->
+        <!-- Name -->
         <div>
-            <x-input-label for="nome" :value="__('Name')" />
+            <x-input-label for="nome" value="Nome" />
             <x-text-input
                 id="nome"
                 class="block mt-1 w-full"
@@ -20,7 +20,7 @@
 
         <!-- Email -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" value="E-mail" />
             <x-text-input
                 id="email"
                 class="block mt-1 w-full"
@@ -33,9 +33,9 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Senha -->
+        <!-- Password -->
         <div x-data="{ show: false }" class="relative">
-            <x-input-label for="senha" :value="__('Password')" />
+            <x-input-label for="senha" value="Senha" />
 
             <div class="relative">
                 <x-text-input
@@ -112,7 +112,7 @@
 
         <!-- Confirm Password -->
         <div x-data="{ show: false }" class="relative">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-input-label for="password_confirmation" value="Confirmar Senha" />
 
             <div class="relative">
                 <x-text-input
@@ -193,11 +193,11 @@
                 href="{{ route('login') }}"
                 class="text-sm  text-sky-700  hover:text-sky-900 underline font-medium transition"
             >
-                {{ __('Already registered?') }}
+                Já possui cadastro?
             </a>
 
             <x-primary-button>
-                {{ __('Register') }}
+                Registrar
             </x-primary-button>
         </div>
     </form>

@@ -1,0 +1,14 @@
+{
+    "name": "cadeaagua",
+    "dockerComposeFile": "../docker-compose.dev.yml",
+    "service": "app",
+    "workspaceFolder": "/var/www",
+    "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-debug"
+    ],
+    "settings": {
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "php.memoryLimit": "512M"
+    }
+}
