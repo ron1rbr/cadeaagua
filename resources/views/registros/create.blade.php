@@ -1,10 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        Registro de Abastecimento
+        Novo Registro
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <x-alert />
+
             <div class="p-4 sm:p-8 bg-white border border-sky-100 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     <section>
@@ -66,7 +68,7 @@
                             </p>
 
                             <p class="text-xs text-sky-500 mt-1">
-                                Se não encontrou, <button id="ir-manual" type="button" class="underline">faça o registro manual</button>.
+                                Se não encontrou, <button id="ir-manual" type="button" class="underline">faça o registro manualmente</button>.
                             </p>
                         </div>
                     </section>
@@ -78,7 +80,7 @@
                     <section>
                         <header>
                             <h2 class="text-lg font-medium text-sky-700">
-                                Registro Completo
+                                Registro Manual
                             </h2>
 
                             <p class="mt-1 text-sm text-sky-600">
@@ -91,7 +93,7 @@
 
                             <!-- Campo Local -->
                             <div>
-                                <x-input-label for="local" :value="'Local'" />
+                                <x-input-label for="rua" :value="'Local'" />
 
                                 <select
                                     name="rua_id"
@@ -106,7 +108,7 @@
 
                             <div>
                                 <!-- Tipo de Evento -->
-                                <x-input-label for="evento" :value="'Tipo do Evento'" />
+                                <x-input-label for="tipo-evento" :value="'Tipo do Evento'" />
 
                                 <select
                                     name="tipo_evento"
@@ -119,20 +121,6 @@
                                 </select>
 
                                 <x-input-error :messages="$errors->get('tipo_evento')" class="mt-2" />
-                            </div>
-
-                            <!-- Data e Hora -->
-                            <div>
-                                <x-input-label for="data-evento" :value="'Data/Hora do Evento'" />
-
-                                <x-text-input
-                                    name="data_evento"
-                                    id="data-evento"
-                                    type="text"
-                                    class="mt-1 block w-full"
-                                    required />
-
-                                <x-input-error :messages="$errors->get('data_evento')" class="mt-2" />
                             </div>
 
                             <!-- Nota -->
@@ -173,7 +161,6 @@
     </div>
 
     @push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
     <style>
         .ts-wrapper .ts-control {
@@ -227,8 +214,6 @@
     @endpush
 
     @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
 
     <script>
@@ -302,15 +287,6 @@
                     .then(data => callback(data))
                     .catch(() => callback());
             }
-        });
-
-        flatpickr('#data-evento', {
-            locale: 'pt',
-            enableTime: true,
-            dateFormat: 'd/m/Y H:i',
-            time_24hr: true,
-            clickOpens: true,
-            defaultDate: new Date()
         });
     </script>
     @endpush

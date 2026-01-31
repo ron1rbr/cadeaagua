@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('provider')->nullable();
             $table->string('provider_id')->nullable();
             $table->rememberToken();
+            $table->integer('trust_level')->default(0);
             $table->timestamps();
         });
 

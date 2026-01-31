@@ -2,27 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\RegistroAbastecimentoService;
 use App\Models\Rua;
 use App\Models\RegistroAbastecimento;
+use App\Exceptions\RegistroAbastecimentoException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RegistroAbastecimentoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $registros = RegistroAbastecimento::with('rua')
+            ->when($request->tipo_evento, function ($query) use ($request) {
+                $query->where('tipo_evento', $request->tipo_evento);
+            })
+            ->when($request->data_inicio, function ($query) use ($request) {
+                $query->whereDate('data_evento', '>=', $request->data_inicio);
+            })
+            ->when($request->data_fim, function ($query) use ($request) {
+                $query->whereDate('data_evento', '<=', $request->data_fim);
+            })
             ->where('user_id', Auth::id())
-            ->orderBy('data_evento', 'desc')
-            ->paginate(2);
+            ->orderByRaw('DATE(data_evento) desc')
+            ->paginate(20)
+            ->onEachSide(1);
 
         return view('registros.index', compact('registros'));
     }
 
     public function create()
     {
-        $ruas = Rua::orderBy('nome')->get();
-        return view('registros.create', compact('ruas'));
+        return view('registros.create');
     }
 
     public function store(Request $request)
@@ -30,40 +41,71 @@ class RegistroAbastecimentoController extends Controller
         $request->validate([
             'rua_id' => 'required|exists:ruas,id',
             'tipo_evento' => 'required|in:chegou,acabou',
-            'data_evento' => 'required|date',
             'nota' => 'nullable|string|max:255'
         ]);
 
-        RegistroAbastecimento::create([
-            'user_id' => Auth::id(),
-            'rua_id' => $request->rua_id,
-            'tipo_evento' => $request->tipo_evento,
-            'data_evento' => $request->data_evento,
-            'nota' => $request->nota
-        ]);
+        try {
+            $service = new RegistroAbastecimentoService();
 
-        return redirect()->route('registros.index')->with('success', 'Registro enviado com sucesso!');
+            $resultado = $service->criarRegistro(
+                Auth::id(),
+                $request->rua_id,
+                $request->tipo_evento,
+                $request->nota
+            );
+
+            return redirect()
+                ->route('registros.index')
+                ->with('success', 'Registro enviado e processado com sucesso!');
+        } catch (RegistroAbastecimentoException $e) {
+            return back()->withErrors(['business' => $e->getMessage()]);
+        }
     }
 
-    public function storeRapido(Request $request, string $tipo)
+    public function storeRapido(Request $request, string $tipoEvento)
     {
         $request->validate([
             'rua_id' => 'required|exists:ruas,id'
         ]);
 
+        try {
+            $service = new RegistroAbastecimentoService();
 
-        $rua = Rua::find($request->rua_id);
+            $resultado = $service->criarRegistro(Auth::id(), $request->rua_id, $tipoEvento);
 
-        RegistroAbastecimento::create([
-            'user_id' => Auth::id(),
-            'rua_id' => $rua->id,
-            'tipo_evento' => $tipo,
-            'data_evento' => now(),
-            'nota' => 'Registro rápido.'
-        ]);
+            return redirect()
+                ->route('registros.index')
+                ->with('success', 'Registro enviado e processado com sucesso!');
+        } catch (RegistroAbastecimentoException $e) {
+            return back()->withErrors(['business' => $e->getMessage()]);
+        }
+    }
 
-        return redirect()
-            ->route('registros.index')
-            ->with('success', 'Registro rápido enviado com sucesso!');
+    public function historico(Request $request)
+    {
+        $registros = RegistroAbastecimento::with('rua')
+            ->when($request->rua_id, function ($query) use ($request) {
+                $query->where('rua_id', $request->rua_id);
+            })
+            ->when($request->tipo_evento, function ($query) use ($request) {
+                $query->where('tipo_evento', $request->tipo_evento);
+            })
+            ->when($request->data_inicio, function ($query) use ($request) {
+                $query->whereDate('data_evento', '>=', $request->data_inicio);
+            })
+            ->when($request->data_fim, function ($query) use ($request) {
+                $query->whereDate('data_evento', '<=', $request->data_fim);
+            })
+            ->orderByRaw('DATE(data_evento) desc')
+            ->paginate(20)
+            ->onEachSide(1);
+
+        $ruaSelecionada = null;
+
+        if ($request->rua_id) {
+            $ruaSelecionada = Rua::select('id', 'nome')->find($request->rua_id);
+        }
+
+        return view('registros.historico', compact('registros', 'ruaSelecionada'));
     }
 }

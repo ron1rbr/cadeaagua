@@ -6,6 +6,11 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
+                        <img
+                            src="{{ asset('images/brand.png') }}"
+                            alt="Cadê a Água"
+                            class="h-8 w-7">
+
                         <span class="text-xl font-semibold text-sky-700">
                             Cadê a Água?
                         </span>
@@ -15,15 +20,15 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link
-                        :href="route('dashboard')"
-                        :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        :href="route('registros.index')"
+                        :active="request()->routeIs('registros.index')">
+                        Meus Registros
                     </x-nav-link>
 
                     <x-nav-link
-                        :href="route('registros.create')"
-                        :active="request()->routeIs('registros.create')">
-                        Registro de Abastecimento
+                        :href="route('registros.historico')"
+                        :active="request()->routeIs('registros.historico')">
+                        Histórico de Abastecimento
                     </x-nav-link>
                 </div>
             </div>
@@ -109,19 +114,19 @@
         <div class="bg-white shadow-lg border border-sky-100 rounded-xl mt-3 py-4 relative z-50">
             <nav class="flex flex-col space-y-2 text-center">
                 <x-responsive-nav-link
-                    :href="route('dashboard')"
-                    :active="request()->routeIs('dashboard')"
+                    :href="route('registros.index')"
+                    :active="request()->routeIs('registros.index')"
                     class="text-sky-700"
                 >
-                    {{ __('Dashboard') }}
+                    Meus Registros
                 </x-responsive-nav-link>
 
                 <x-responsive-nav-link
-                    :href="route('registros.create')"
-                    :active="request()->routeIs('registros.create')"
+                    :href="route('registros.historico')"
+                    :active="request()->routeIs('registros.historico')"
                     class="py-2 text-sky-700"
                 >
-                    Registro de Abastecimento
+                    Histórico de Abastecimento
                 </x-responsive-nav-link>
 
                 <x-responsive-nav-link

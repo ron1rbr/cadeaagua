@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialAuthController;
-use App\Http\Controllers\RuaController;
+// use App\Http\Controllers\RuaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,8 +26,8 @@ Route::get('/auth/{profile}/callback', [SocialAuthController::class, 'callback']
 
 
 // Rota para obter a rua mais próxima do usuário via AJAX
-Route::get('/ruas/rua-mais-proxima', [RuaController::class, 'ruaMaisProxima'])
-    ->name('ruas.rua-mais-proxima');
+/* Route::get('/ruas/rua-mais-proxima', [RuaController::class, 'ruaMaisProxima'])
+    ->name('ruas.rua-mais-proxima'); */
 
 require __DIR__.'/registro-abastecimento.php';
 
