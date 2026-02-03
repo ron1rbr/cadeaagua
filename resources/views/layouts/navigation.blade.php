@@ -20,6 +20,12 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link
+                        :href="route('timeline')"
+                        :active="request()->routeIs('timeline')">
+                        Ciclo da Água
+                    </x-nav-link>
+
+                    <x-nav-link
                         :href="route('registros.index')"
                         :active="request()->routeIs('registros.index')">
                         Meus Registros
@@ -113,6 +119,14 @@
     >
         <div class="bg-white shadow-lg border border-sky-100 rounded-xl mt-3 py-4 relative z-50">
             <nav class="flex flex-col space-y-2 text-center">
+                <x-responsive-nav-link
+                    :href="route('timeline')"
+                    :active="request()->routeIs('timeline')"
+                    class="text-sky-700"
+                >
+                    Ciclo da Água
+                </x-responsive-nav-link>
+
                 <x-responsive-nav-link
                     :href="route('registros.index')"
                     :active="request()->routeIs('registros.index')"

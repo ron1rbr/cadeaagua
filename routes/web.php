@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\TimelineController;
 // use App\Http\Controllers\RuaController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,5 @@ Route::get('/auth/{profile}/callback', [SocialAuthController::class, 'callback']
 
 require __DIR__.'/registro-abastecimento.php';
 
+Route::get('/timeline', [TimelineController::class, 'index'])
+    ->name('timeline');
