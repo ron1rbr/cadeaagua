@@ -7,7 +7,7 @@ services:
     image: cadeaagua-app
     container_name: cadeaagua-app
     volumes:
-     - public_build:/var/www/public/build
+     - public:/var/www/public
      - storage:/var/www/storage
     networks:
       - cadeaagua
@@ -17,7 +17,7 @@ services:
     container_name: cadeaagua-nginx
     restart: unless-stopped
     volumes:
-      - public_build:/var/www/public/build:ro
+      - public:/var/www/public:ro
       - ./docker/prod/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - letsencrypt:/etc/letsencrypt
       - certbot:/var/www/certbot
@@ -55,7 +55,7 @@ networks:
 
 volumes:
   cadeaagua_data:
-  public_build:
+  public:
   letsencrypt:
   certbot:
   storage:
