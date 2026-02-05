@@ -45,6 +45,6 @@ class SocialAuthController extends Controller
         // Logar usuário
         Auth::login($user, true);
 
-        return redirect('/dashboard');
+        return redirect('/registros');
     }
 }

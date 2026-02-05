@@ -251,7 +251,7 @@
             document.getElementById('registro-rapido-acabou-btn').disabled = true;
         }
 
-        /* navigator.geolocation.getCurrentPosition(function(pos) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
             const lat = pos.coords.latitude;
             const lng = pos.coords.longitude;
 
@@ -260,7 +260,7 @@
             console.error('Geolocalização falhou', err);
             disableRegistroRapidoButtons();
             document.getElementById('rua-detectada').textContent = 'Nenhum local pŕoximo';
-        }); */
+        });
 
         document.getElementById('ir-manual').addEventListener('click', function() {
             const registroManualForm = document.getElementById('registro-manual-form');
@@ -270,8 +270,6 @@
                 block: 'center'
             });
         });
-
-        ruaMaisProxima(-9.835745, -39.489039);
 
         new TomSelect('#rua', {
             placeholder: 'Digite o nome da rua ou local',

@@ -14,6 +14,9 @@ class RegistroAbastecimentoController extends Controller
     public function index(Request $request)
     {
         $registros = RegistroAbastecimento::with('rua')
+            ->when($request->rua_id, function ($query) use ($request) {
+                $query->where('rua_id', $request->rua_id);
+            })
             ->when($request->tipo_evento, function ($query) use ($request) {
                 $query->where('tipo_evento', $request->tipo_evento);
             })
@@ -27,8 +30,14 @@ class RegistroAbastecimentoController extends Controller
             ->orderByRaw('DATE(data_evento) desc')
             ->paginate(20)
             ->onEachSide(1);
+        
+        $ruaSelecionada = null;
 
-        return view('registros.index', compact('registros'));
+        if ($request->rua_id) {
+            $ruaSelecionada = Rua::select('id', 'nome')->find($request->rua_id);
+        }
+
+        return view('registros.index', compact('registros', 'ruaSelecionada'));
     }
 
     public function create()

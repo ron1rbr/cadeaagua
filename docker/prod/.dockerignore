@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Docker
+docker-compose*.yml
+docker/
+Dockerfile
+.dockerignore
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Laravel
+.env
+.env.*
+storage/logs
+storage/framework/cache
+storage/framework/sessions
+storage/framework/views
+
+# Tests & dev
+tests
+phpunit.xml
+.editorconfig
+
+# OS / IDE
+.vscode
+.idea
+.DS_Store
+.devcontainer

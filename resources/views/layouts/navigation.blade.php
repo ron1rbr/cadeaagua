@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
+                    <a href="{{ route('mapa') }}" class="flex items-center gap-2">
                         <img
                             src="{{ asset('images/brand.png') }}"
                             alt="Cadê a Água"
@@ -35,6 +35,11 @@
                         :href="route('registros.historico')"
                         :active="request()->routeIs('registros.historico')">
                         Histórico de Abastecimento
+                    </x-nav-link>
+
+                    <x-nav-link
+                        :href="route('mapa')">
+                        Mapa da Seca
                     </x-nav-link>
                 </div>
             </div>
@@ -141,6 +146,13 @@
                     class="py-2 text-sky-700"
                 >
                     Histórico de Abastecimento
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link
+                    :href="route('mapa')"
+                    class="py-2 text-sky-700"
+                >
+                    Mapa da Seca
                 </x-responsive-nav-link>
 
                 <x-responsive-nav-link

@@ -3,12 +3,15 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\TimelineController;
+use App\Http\Controllers\MapaController;
 // use App\Http\Controllers\RuaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [MapaController::class, 'index'])
+    ->name('mapa');
+
+Route::get('/mapa/ruas', [MapaController::class, 'ruasGeoJson'])
+    ->name('mapa.ruas');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

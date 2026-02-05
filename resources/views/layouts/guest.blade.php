@@ -20,8 +20,13 @@
     >
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <!-- Logo + Marca -->
-            <a href="/" class="flex items-center gap-2">
+            <a href="{{ route('mapa') }}" class="flex items-center gap-2">
                 {{-- <x-application-logo class="w-10 h-10 text-sky-600" /> --}}
+                <img
+                    src="{{ asset('images/brand.png') }}"
+                    alt="Cadê a Água"
+                    class="h-8 w-7">
+
                 <span class="text-xl font-semibold text-sky-700">
                     {{ config('app.name', 'Cadê a Água?') }}
                 </span>
@@ -50,7 +55,7 @@
 
             <!-- Menu Desktop -->
             <nav class="hidden md:flex items-center gap-6">
-                <a href="/" class="text-sky-700 hover:text-sky-900 transition">Início</a>
+                <a href="/" class="text-sky-700 hover:text-sky-900 transition">Mapa da Seca</a>
                 <a href="/login" class="text-sky-700 hover:text-sky-900 transition">Entrar</a>
                 <a
                     href="/register"
@@ -79,7 +84,7 @@
                         href="/"
                         class="py-2 text-sky-700 hover:text-sky-900 font-medium transition"
                     >
-                        Início
+                        Mapa da Seca
                     </a>
 
                     <a

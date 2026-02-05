@@ -20,7 +20,23 @@
                         </p>
                     </header>
 
-                    <form method="GET" class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <form method="GET" class="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-4">
+                        <div>
+                            <x-input-label for="rua" value="Local" />
+
+                            <select
+                                name="rua_id"
+                                id="rua"
+                                class="mt-1 block w-full border-sky-300 focus:border-sky-500 focus:ring-sky-500 rounded-lg"
+                            >
+                                <option value="">Todas as ruas</option>
+
+                                @if($ruaSelecionada)
+                                    <option value="{{ $ruaSelecionada->id }}" selected>{{ $ruaSelecionada->nome }}</option>
+                                @endif
+                            </select>
+                        </div>
+
                         <div>
                             <x-input-label for="tipo-evento" value="Tipo de Evento" />
 
@@ -94,7 +110,6 @@
                     <div class="mt-6 relative border-l border-sky-200">
                         @forelse($registros as $registro)
                             <div class="ml-6 pb-8 relative">
-                                {{-- Ponto --}}
                                 <span
                                     class="absolute -left-3 top-1.5 w-5 h-5 rounded-full flex items-center justify-center
                                     {{ $registro->tipo_evento == 'chegou' ? 'bg-green-500' : 'bg-red-500' }}">
@@ -109,7 +124,6 @@
                                     @endif
                                 </span>
 
-                                {{-- Card --}}
                                 <div class="bg-white border border-sky-100 rounded-lg p-4 shadow-sm">
                                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                                         <div>
@@ -174,4 +188,88 @@
             </div>
         </div>
     </div>
+
+    @push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet" />
+
+        <style>
+        .ts-wrapper .ts-control {
+            border-color: rgb(125 211 252 / 1);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            line-height: 1.5rem;
+        }
+
+        .ts-control input::placeholder {
+            color: rgb(0 0 0 / 1);
+            font-size: 1rem;
+        }
+
+        .ts-control input {
+            color: rgb(0 0 0 / 1);
+            font-size: 1rem;
+        }
+
+        .ts-control .item {
+            color: rgb(0 0 0 / 1);
+            font-size: 1rem;
+        }
+
+        .ts-wrapper .ts-control:focus-within {
+            border-color: rgb(14 165 233 / 1);
+            box-shadow: 0 0 0 1px rgb(14 165 233 / 1);
+        }
+
+        .ts-dropdown {
+            margin-top: 0.5rem;
+            background-color: rgb(255 255 255 / 1);
+            border: 1px solid rgb(224 242 254 / 1);
+	        border-radius: .375rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+                        0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        .ts-dropdown .option {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            cursor: pointer;
+        }
+
+        .ts-dropdown .option:hover,
+        .ts-dropdown .option.active {
+	        background-color: rgb(240 249 255 / 1);
+        }
+    </style>
+    @endpush
+
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+
+    <script>
+        new TomSelect('#rua', {
+            placeholder: 'Todas as ruas',
+            valueField: 'id',
+            labelField: 'nome',
+            searchField: 'nome',
+            loadThrottle: 300,
+            load(query, callback) {
+                if (!query.length) return callback();
+
+                fetch(`{{ url('/api/ruas') }}?q=${encodeURIComponent(query)}`)
+                    .then(res => res.json())
+                    .then(data => callback(data))
+                    .catch(() => callback());
+            },
+            onFocus() {
+                this.settings.placeholder = 'Digite o nome da rua ou local';
+            },
+            onBlur() {
+                if (!this.getValue()) {
+                    this.settings.placeholder = 'Todas as ruas';
+                }
+            }
+        });
+    </script>
+    @endpush
 </x-app-layout>
