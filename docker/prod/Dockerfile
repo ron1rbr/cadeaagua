@@ -2,10 +2,10 @@
 FROM node:20-alpine AS node_build
 
 WORKDIR /app
-COPY package*.json .
+COPY package*.json ./
 RUN npm install
 COPY resources ./resources
-COPY vite.config.* .
+COPY vite.config.* ./
 RUN npm run build
 
 
