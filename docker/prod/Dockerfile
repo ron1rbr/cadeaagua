@@ -4,8 +4,8 @@ FROM node:20-alpine AS node_build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
+COPY tailwind.config.* postcss.config.* vite.config.* ./
 COPY resources ./resources
-COPY vite.config.* ./
 RUN npm run build
 
 
