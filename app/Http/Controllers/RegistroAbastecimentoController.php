@@ -27,7 +27,7 @@ class RegistroAbastecimentoController extends Controller
                 $query->whereDate('data_evento', '<=', $request->data_fim);
             })
             ->where('user_id', Auth::id())
-            ->orderByRaw('DATE(data_evento) desc')
+            ->orderBy('id', 'desc')
             ->paginate(20)
             ->onEachSide(1);
         
@@ -105,7 +105,7 @@ class RegistroAbastecimentoController extends Controller
             ->when($request->data_fim, function ($query) use ($request) {
                 $query->whereDate('data_evento', '<=', $request->data_fim);
             })
-            ->orderByRaw('DATE(data_evento) desc')
+            ->orderBy('id', 'desc')
             ->paginate(20)
             ->onEachSide(1);
 
