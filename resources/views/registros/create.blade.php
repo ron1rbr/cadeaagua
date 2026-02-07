@@ -26,7 +26,7 @@
                                 @csrf
                                 <input type="hidden" id="rua-chegou" name="rua_id">
 
-                                <x-primary-button id="registro-rapido-chegou-btn" class="w-full py-4 flex items-center justify-center gap-2 text-lg">
+                                <x-primary-button id="registro-rapido-chegou-btn" class="w-full py-4 flex items-center justify-center gap-2 text-lg" disabled>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
@@ -46,7 +46,7 @@
                                 @csrf
                                 <input type="hidden" id="rua-acabou" name="rua_id">
 
-                                <x-danger-button id="registro-rapido-acabou-btn" class="w-full py-4 flex items-center justify-center gap-2 text-lg">
+                                <x-danger-button id="registro-rapido-acabou-btn" class="w-full py-4 flex items-center justify-center gap-2 text-lg" disabled>
 
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
