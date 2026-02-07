@@ -219,6 +219,8 @@
     <script>
         async function ruaMaisProxima(lat, lng) {
             try {
+                disableRegistroRapidoButtons(true);
+
                 const url = `{{ url('/api/ruas') }}?lat=${lat}&lng=${lng}`;
 
                 const response = await fetch(url, {
@@ -228,7 +230,7 @@
                 });
 
                 if (!response.ok) {
-                    disableRegistroRapidoButtons();
+                    disableRegistroRapidoButtons(true);
                     document.getElementById('rua-detectada').textContent = 'Nenhum local próximo';
                     return;
                 }
@@ -239,16 +241,18 @@
                 document.getElementById('rua-acabou').value = rua.data.id;
 
                 document.getElementById('rua-detectada').textContent = rua.data.nome;
+
+                disableRegistroRapidoButtons(false);
             } catch (err) {
                 console.error('Erro ao buscar rua mais próxima', err);
-                disableRegistroRapidoButtons();
+                disableRegistroRapidoButtons(true);
                 document.getElementById('rua-detectada').textContent = 'Nenhum local próximo';
             }
         }
 
-        function disableRegistroRapidoButtons() {
-            document.getElementById('registro-rapido-chegou-btn').disabled = true;
-            document.getElementById('registro-rapido-acabou-btn').disabled = true;
+        function disableRegistroRapidoButtons(disabled = true) {
+            document.getElementById('registro-rapido-chegou-btn').disabled = disabled;
+            document.getElementById('registro-rapido-acabou-btn').disabled = disabled;
         }
 
         navigator.geolocation.getCurrentPosition(function(pos) {
@@ -258,7 +262,7 @@
             ruaMaisProxima(lat, lng);
         }, function(err) {
             console.error('Geolocalização falhou', err);
-            disableRegistroRapidoButtons();
+            disableRegistroRapidoButtons(true);
             document.getElementById('rua-detectada').textContent = 'Nenhum local pŕoximo';
         });
 
