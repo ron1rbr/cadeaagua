@@ -79,8 +79,8 @@ class RegistroAbastecimentoService
         }
 
         $limiar = max(
-            4, // mínimo absoluto
-            ceil($pesoTotalUsuarios * 0.6)
+            2, // mínimo absoluto
+            ceil($pesoTotalUsuarios * 0.4)
         );
 
         $usuariosPorEvento = $registros
